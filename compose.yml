@@ -1,0 +1,21 @@
+services:
+  spring-server:
+    image: juwoojae/my-server-image:latest
+    ports:
+      - 8080:8080
+    depends_on: # mysql 이 healthcheck 에서 healthy 판정을 받을때 까지 기다렸다가 실행된다.
+      my-db:
+        condition: service_healthy
+  my-db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: mydb
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping" ] # mysql 컨테이너에게 ping 테스트
+      interval: 5s # 5초마다 healthcheck 실행
+      retries: 10 # 10 번 연속으로 실패하면 unhealthy 판정
