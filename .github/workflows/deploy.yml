@@ -34,7 +34,7 @@ jobs:
       - name: 도커 허브에 도커 image push 하기
         run: docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
 
-      - name: SSH 로 EC2 에 접근하기
+      - name: SSH 로 EC2 에 접근하기 + docker 에서 이미지를 pull 해온뒤, 실행
         uses: appleboy/ssh-action@v1.2.3
         with:
           host: ${{ secrets.WAS_HOST }}
