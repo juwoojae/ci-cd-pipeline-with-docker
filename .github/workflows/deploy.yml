@@ -22,7 +22,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: 도커 이미지 빌드하기
-        run: docker build -t $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG .
 
       - name: 도커 허브에 로그인 하기
         uses: docker/login-action@v3
